@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script> -->
+  <style>
+    #title {
+      color: sandybrown;
+      margin-bottom: 25px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 id="title">12334566</h1>
+  <!-- <div id="app">
+    <h2>JT & TNKID</h2>
+  </div> -->
+
+  <script>
+    // var person = {
+    //   name: "Brendan Eich",
+    //   hello: function (thing) {
+    //     console.log(this.name + " says hello " + thing);
+    //   }
+    // }
+    // var hello = {
+    //   name: '100t'
+    // }
+
+    // // func:要执行的方法； thisValue:this
+    // var bind = function (func, thisValue) {
+    //   return function () {
+    //     return func.apply(thisValue, arguments)
+    //   }
+    // }
+    // var boundHellow = bind(person.hello, hello)
+    // boundHellow('word')
+    var title = document.querySelector('#title')
+    var name = '1+1'
+    var obj = {
+      name: '2+2',
+      func: function() {
+        console.log(this.name)
+        console.log(1)
+      }
+    }
+    // console.log(title)
+    // var bind = function(thisValue, func) {
+    //   return func.bind(thisValue, func)
+    // }
+    title.onclick = obj.func.bind(obj, obj.func)
+  </script>
+</body>
+
+</html>

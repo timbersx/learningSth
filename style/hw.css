@@ -1,0 +1,15 @@
+.greeting {
+  color: burlywood;
+}
+
+#mainTitle {
+  color: aqua;
+}
+
+.center {
+  color: forestgreen;
+}
+
+.greeting .center {
+  color: blueviolet;
+}

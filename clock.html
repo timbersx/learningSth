@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="http://static.runoob.com/assets/react/react-0.14.7/build/react.min.js"></script>
+  <script src="http://static.runoob.com/assets/react/react-0.14.7/build/react-dom.min.js"></script>
+  <script src="http://static.runoob.com/assets/react/browser.min.js"></script>
+  <link href="">
+</head>
+
+<body>
+  <div id="root">
+  </div>
+
+  <script type="text/babel">
+    // // clock appearance
+    // function Clock(props) {
+    //   return (
+    //     <div>
+    //       <h1>现在的时间：</h1>
+    //       <h2>It is {props.date.toLocaleTimeString()}.</h2>
+    //     </div>
+    //   )
+    // }
+    // // tick
+    // function tick() {
+    //   ReactDOM.render(
+    //     <Clock date={new Date()} />,
+    //     document.getElementById('root')
+    //   )
+    // }
+
+    // setInterval(tick, 1000)
+
+    class Clock extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          date: new Date()
+        }
+      }
+      componentDidMount() {
+        this.timerId = setInterval(
+          () => this.tick(),
+          1000
+        )
+      }
+      ComponentWillUnmount() {
+        clearInterval(this.timerId)
+      }
+      tick() {
+        this.setState({
+          date: new Date()
+        })
+      }
+      render() {
+        return (
+          <div>
+            <h1>现在的时间：</h1>
+            <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(
+      <Clock />,
+      document.getElementById('root')
+    )
+  </script>
+</body>
+
+</html>

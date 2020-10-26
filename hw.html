@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="./style/hw.css" type="text/css" rel="styleSheet"></link>
+  <div id="root">
+    <h1 class="greeting" id="mainTitle">
+      <span class="center">骨干教师考核项目测试new</span>
+    </h1>
+  </div>
+</head>
+<body>
+  <script>
+    
+    // const user = {
+    //   name: '教师1',
+    //   url: ''
+    // }
+    // const a = <h2>123566</h2>
+    // const b = <img src={user.url}/>
+    
+    // ReactDOM.render(
+    //   <h1>xxxsssrrr</h1>,
+    //   document.getElementById('root')
+    // )
+
+    // const element = (
+    //   <div className="greeting">
+        
+    //   </div>
+    // )
+    
+    class Welcome extends React.Component {
+      render() {
+        return <h1>Hello, {this.props.name}</h1>
+      }
+    }
+
+    function Welcome(obj) {
+      return <div>xxbb: {obj.name}</div>
+    }
+    
+    const element = <Welcome name="Sara"/>
+    ReactDom.render(
+      element,
+      document.getElementById('root')
+    )
+  </script>
+</body>
+</html>

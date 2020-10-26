@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="http://static.runoob.com/assets/react/react-0.14.7/build/react.min.js"></script>
+  <script src="http://static.runoob.com/assets/react/react-0.14.7/build/react-dom.min.js"></script>
+  <script src="http://static.runoob.com/assets/react/browser.min.js"></script>
+</head>
+
+<body>
+  <div id="root">
+  </div>
+  <div id="root2">
+  </div>
+  <script type="text/babel">
+    function ActionLink() {
+      function handleBtnClick(e) {
+        e.preventDefault()
+        console.log('The Link was clicked')
+      }
+      return (
+        <a link="#" onClick={handleBtnClick}>Here we go</a>
+      )
+    }
+    ReactDOM.render(
+      <ActionLink />,
+      document.getElementById('root')
+    )
+
+
+    class ActionClick2 extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = { isToggleOn: true }
+        // 为了在回调中使用 `this`，这个绑定是必不可少的
+        this.handleBtnClick = this.handleBtnClick.bind(this)
+      }
+
+      handleBtnClick() {
+        this.setState(state => ({
+          isToggleOn: !state.isToggleOn
+        }))
+      }
+
+      render() {
+        return (
+          <button onClick={this.handleBtnClick}>
+            { this.state.isToggleOn ? 'ON' : 'OFF'}
+          </button>
+        )
+      }
+    }
+    ReactDOM.render(
+      <ActionClick2 />,
+      document.getElementById('root2')
+    )
+  </script>
+</body>
+
+</html>
