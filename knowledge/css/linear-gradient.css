@@ -1,0 +1,58 @@
+/* linear-gradient函数 */
+
+.root {
+  width: 200px;
+  height: 200px;
+  /* 渐变轴为45度(左下->右上); 90度(左至右); 180度(上至下); 0度(下至上)*/
+  background: linear-gradient(45deg, rgb(224, 189, 71), rgb(31, 161, 96));
+  /* 从右下到左上 */
+  /* background: linear-gradient(to left top, rgb(224, 189, 71), rgb(31, 161, 96)); */
+  /* 什么都不传 (上至下)(默认渐变轴为180度) */
+  background: linear-gradient(rgb(224, 189, 71), rgb(31, 161, 96));
+  /* 由下至上 */
+  /* background: linear-gradient(0deg, rgb(224, 189, 71), rgb(31, 161, 96)); */
+}
+
+/* linear-gradient()不适用于background-color */
+/* .test {
+  width: 200px;
+  height: 200px;
+  background-color: red linear-gradient(0deg, rgb(224, 189, 71), rgb(31, 161, 96));
+} */
+
+/* 
+  关于中间点：默认是前一个颜色点 与后一个颜色点的中点
+  百分比指的是颜色开始渐变的位置，如果百分比前没有颜色，则此时的百分比指的中间点的位置（中间点👆）
+*/
+.test {
+  width: 200px;
+  height: 200px;
+  /* background: linear-gradient(red, orange, yellow, green, blue); */
+  /* 从上至下：0-10%纯红，10%-25%红渐变为橘色，25%-100% 纯橘*/
+  /* background: linear-gradient(red 10%, orange 25%); */
+  /* background: linear-gradient(red 10%, black 85%); */
+  /* 从上至下：0-10%纯红，10%开始渐变，15%时渐变为红黑渐变中值，%85渐变结束，85%-100%纯黑  */
+  /* background: linear-gradient(red 10%, 15%, black 85%); */
+
+  /* background: linear-gradient(red 40%, 50%, black 90%); */
+  /* 下面两个是等价的，而上面一个不是 */
+  /* background: linear-gradient(red 40%, black 90%); */
+  background: linear-gradient(red 40%, 65%, black 90%);
+}
+
+.test2 {
+  width: 200px;
+  height: 200px;
+  margin-top: 20px;
+  /* 因为参数2黄色的百分比必40%还低,会生硬的产生一根线在30%的位置 */
+  /* background :linear-gradient(red 40%, yellow 30%, blue 85%) */
+
+  /* background : linear-gradient(red 0%, orange 10%, orange 30%, yellow 50%, yellow 70%, green 90%, green 100%) */
+  /* 另一种写法👆👇 */
+  /* background : linear-gradient(red, orange 10% 30%, yellow 50% 70%, green 90%); */
+
+  /* 好家伙 */
+  background: linear-gradient(217deg,rgba(255, 0, 0, 0.8),rgba(255, 0, 0, 0) 70.71%),
+              linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
+              linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
+}
