@@ -43,7 +43,7 @@
 .test2 {
   width: 200px;
   height: 200px;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   /* 因为参数2黄色的百分比必40%还低,会生硬的产生一根线在30%的位置 */
   /* background :linear-gradient(red 40%, yellow 30%, blue 85%) */
 

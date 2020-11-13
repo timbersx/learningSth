@@ -1,0 +1,17 @@
+/* hsl颜色 */
+/* Hue色相 saturation饱和度 lightness亮度 */
+/* HSL 相比 RGB 的优点是更加直观：你可以估算你想要的颜色，然后微调。它也更易于创建相称的颜色集合 */
+.root {
+  width: 100px;
+  height: 100px;
+  /* 色相：0-360（0或360代表红色，120代表绿色，240表示蓝色）;饱和度：0%-100%；亮度：0%-100% */
+  /* background-color: hsl(120, 80%, 40%); */
+  /* 推荐使用HSLA而不是RGBA来产生半透明的白色(减少代码量) */
+
+  /* 半透明白色 */
+  background-color: hsl(0, 0%, 100%, 0.5);
+  background-color: rgba(255,255,255,0.5);
+  /* 半透明黑色 */
+  background-color: hsl(0, 0%, 0%, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
+}

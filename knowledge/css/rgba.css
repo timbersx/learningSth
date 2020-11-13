@@ -1,0 +1,32 @@
+/* rgba颜色 */
+.root {
+  width: 200px;
+  height: 200px;
+  /* 在CSS 颜色标准 4 中，rgba()是rgb()的别称。在实行第4级标准的浏览器中，它们接受相同的参数，作用效果也相同。 */
+  /* rgb也可以传四个参数👇 */
+  background-color: rgb(30, 200, 50, 0.5);
+}
+.test {
+  width: 200px;
+  height: 200px;
+
+  /* 十六进制表示法RRGGBBAA 红绿蓝alpha（0-f）=>f是完全不透明*/
+  /* background-color: #ff0000ff; */
+  /* background-color: #ff0000; */
+  
+  /* 十六进制符号 */
+  /* background-color: #f00; */
+
+  /* 函数符(rgb可以是数字，也可以是百分比，其中255相当于100%)，(a可以是0-1的数字或者百分比=>1相当于100%是完全不透明) */
+  /* background-color: rgba(102,0,0); */
+  /* 一样的👆👇 */
+  /* background-color: rgba(40%,0,0); */
+
+  /* 带空格的函数式(虽然编辑器看起来好像不可，但是是会生效的) */
+  /* background-color: rgb(102 0 0); */
+  /* 有空格的时候，alpha值必须用斜杠/ */
+  /* background-color: rgb(102 0 0 0.5);  */
+  /* 不生效👆 生效👇 */
+  background-color: rgb(102 0 0 / 0.5); 
+
+}

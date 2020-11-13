@@ -1,0 +1,11 @@
+/* text-shadow */
+#head {
+  /* offset-x右偏移量；offset-y下偏移量；blur-radius模糊半径值越大，模糊半径越大，阴影也就越大越淡；color颜色（可以在偏移量之前或之后指定。） */
+  /* text-shadow: 1px 1px 2px black; */
+
+  /* 👇不生效！因为offset-x与offset-y是必选项 */
+  /* text-shadow: 2px black; */
+
+  /* 当length参数大于2个时,第三个就是模糊半径 */
+  text-shadow: 1px 2px 3px forestgreen;
+}
