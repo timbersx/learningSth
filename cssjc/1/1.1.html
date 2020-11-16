@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style type="text/css">
+    /* 最开始和我一样lj的代🐎 */
     /* .font {
       padding: 6px 16px;
       border: 1px solid #446d88;
@@ -33,28 +34,37 @@
       border-radius: .2em;
       box-shadow: 0 .05em .25em gray;
       color: white;
-      text-shadow: 0 -.05em .05px #335166;
+      text-shadow: 0 -.05em .05em #335166;
       font-size: 125%;
       line-height: 1.5;
     } */
+    .father-font {
+      font-size: 86px;
+    }
 
     /* 把半透明的黑色或白色叠加在主色调上，即可产生主色调的亮色和暗色变体 */
+    /* 好家伙，现在可以只覆盖background color就改颜色了👇 */
     .font {
       padding: .3em .8em;
-      border: 1px solid rgba(0，0，0，.1);
-      background: #58a linear-gradient(hsla(0, 0%, 100%,.2), transparent);
+      border: 1px solid rgba(0, 0, 0, .1);
+      background: #58a linear-gradient(hsla(0, 0%, 100%, .2), transparent);
       border-radius: .2em;
-      box-shadow: 0 .05em .25em gray;
+      box-shadow: 0 .05em .25em rgba(0, 0, 0, .5);
       color: white;
-      text-shadow: 0 -.05em .05px #335166;
+      text-shadow: 0 -.05em .05em rgba(0, 0, 0, .5);
       font-size: 125%;
       line-height: 1.5;
+    }
+    .red {
+      background-color: #c00;
     }
   </style>
 </head>
 
 <body>
-  <div class="font">YES!</div>
+  <div class="father-font">
+    <div class="font red">YES!</div>
+  </div>
 </body>
 
 </html>
