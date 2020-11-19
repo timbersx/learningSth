@@ -21,9 +21,16 @@
 }
 
 /* 2.background-clip */
-.root-father {
-  width: 300px;
-  height: 300px;
+.root {
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  margin: 15px;
   border: 10px dotted black;
-  background: round border-box url(./OET.jpg);
+  /* 默认就是border-box,在边框范围内，他会透出自己盒子里所有的背景，而不会透出盒子外的背景 */
+  /* background: round border-box greenyellow; */
+  /* padding-box,与👆相反，在边框范围内，他会透出自己盒子外的背景，而不会透出盒子里的背景 */
+  /* background: round padding-box greenyellow; */
+  /* content-box,他会 *不仅仅 在边框范围内透出自己盒子外的背景，还会在内边距里透出外部的背景 */
+  background: round content-box greenyellow;
 }
