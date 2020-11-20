@@ -1,0 +1,16 @@
+/* outline */
+
+.root {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  /* 轮廓不占空间，绘制于元素内容周围 */
+  outline: 50px solid deeppink;
+  /* 可以设置宽度，颜色，样式等 */
+  outline: 10px dashed deepskyblue;
+}
+
+/* 将 outline 设置为 0 或 none 会移除浏览器的默认聚焦样式。如果一个元素可交互，这个元素必须有一个可见的聚焦提示。若移除了默认聚焦样式，记得提供一个显眼的聚焦样式。 */
+.input-for-outline {
+  outline: 0;
+}

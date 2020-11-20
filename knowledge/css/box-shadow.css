@@ -1,0 +1,33 @@
+/* box-shadow */
+.root{
+  margin: 100px;
+  width: 200px;
+  height: 200px;
+  background-color: green;
+  box-shadow: 10px 10px 0 red;
+  /* 除了常见的前三个参数：x偏移量，y偏移量，阴影模糊半径；还有一个参数是阴影扩散半径 */
+  box-shadow: 10px 10px 0 10px red;
+  /* 取正值时，阴影扩大；取负值时，阴影收缩。默认为0，此时阴影与元素同样大 */
+  box-shadow: 10px 10px 0 20px red;
+  /* 虽然是-5但是不会在左上和左侧生成阴影 */
+  box-shadow: 10px 10px 0 -5px red;
+  /* 即使阴影偏移是0依然有20px扩散(看起来就像是边框一样) */
+  box-shadow: 0 0 0 20px red;
+  /* 总结：扩散半径可以理解为投影面积，正负值可以控制投影面积的大小 */
+}
+.root-father {
+  background-color: rgb(43, 166, 197);
+  padding: 30px;
+}
+.root{
+  margin: 20px;
+  padding: 20px;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  /* inset关键字会使阴影落在盒子内部，这样看起来就像是内容被压低了 */
+  box-shadow: 1px 1px  rgba(0,0,0,0.6);
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.6);
+  /* 看看扩散半径吧 */
+  box-shadow: inset 10px 1px 0 15px rgba(0,0,0,0.6);
+}

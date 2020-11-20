@@ -29,8 +29,6 @@
 .root {
   width: 100px;
   height: 100px;
-  background: white;
-  /* 背景在边框所在的区域下层 */
-  border: 10px dotted black;
-  
+  border: 10px solid hsla(0,0%,100%,.5);
+  background: padding-box white;
 }
