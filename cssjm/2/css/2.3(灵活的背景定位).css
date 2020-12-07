@@ -1,0 +1,49 @@
+/* 很多时候，我们想针对容器某个角对背景图片做偏移定位。在 CSS 2.1 中，我们只能指定距离左上角的偏移量，或者干脆完全靠齐到其
+他三个角。 */
+/* background-position 的扩展语法方案在 CSS 背景与边框（第三版）中，background-position 属性已经得到扩展，
+它允许我们指定背景图片距离任意角的偏移量，只要我们在偏移量前面指定关键字。举例来说，如果想让背
+景图片跟右边缘保持 20px 的偏移量，同时跟底边保持 10px 的偏移量，可以这样做： */
+.root {
+  width: 300px;
+  height: 300px;
+  background: url(../OET.jpg) goldenrod no-repeat;
+  /* background-position: right 20px bottom 10px; */
+}
+
+/* 在给背景图片设置距离某个角的偏移量时，有一种情况极其常见：偏移量与容器的内边距一致。如果采用上面提到的 background-position 的扩
+展语法方案，代码看起来会是这样的：
+padding: 10px;
+background: url(code-pirate.svg) no-repeat #5 */
+.root {
+  width: 300px;
+  height: 300px;
+  padding: 10px;
+  background: url(../OET.jpg) goldenrod no-repeat;
+  /* background-position: right 10px bottom 10px; */
+}
+
+/* 如你所见，它起作用了，但代码不够DRY：每次改动内边距的值时，我们都需要在三个地方更新这个值！*/
+/* 默认情况下，background-position 是以 padding box 为准的，这样边框才不会遮住背景图片。因此，top left 默认指的是 padding box 的左上
+角。不过，在背景与边框（第三版）（http://w3.org/TR/css3-background）中，我们得到了一个新的属性 background-origin，可以用它来改变这种行为。
+在默认情况下，它的值是（闭着眼睛也猜得到）padding-box。如果把它的值改成 content-box（参见下面的代码），我们在 background-position 属
+性中使用的边角关键字将会以内容区的边缘作为基准（也就是说，此时背景图片距离边角的偏移量就跟内边距保持一致了）： */
+.root {
+  width: 300px;
+  height: 300px;
+  padding: 10px;
+  background: url(../OET.jpg) goldenrod no-repeat;
+  /* background-origin: content-box; */
+  /* background-position: right 0 bottom 0; */
+}
+
+/* 让我们回顾一下本节开头的挑战：把背景图片定位到距离底边 10px 且距离右边 20px 的位置。如果我们仍然以左上角偏移的思路来考虑，其实
+就是希望它有一个 100% - 20px 的水平偏移量，以及 100% - 10px 的垂直偏移量。谢天谢地，calc() 函数允许我们执行此类运算，它可以完美地在
+background-position 属性中使用 */
+.root {
+  width: 300px;
+  height: 300px;
+  padding: 10px;
+  background: url(../OET.jpg) goldenrod no-repeat;
+  /* background-origin: content-box; */
+  background-position:  calc(100% - 20px) calc(100% - 10px);
+}
