@@ -41,11 +41,11 @@
   height: 300px;
   /* 如果要直接使用简写属性必须在bg-position后加/然后写 */
   /* background: 10px 20px / 100px url(./OET.jpg); */
-  /* 这样写会直接占满？答案是conain属性会寻找到width和height中较小的一个，较小的一部分会占满，其他部分遵循repeat */
+  /* 这样写会直接占满？保持图像的宽高比例，可能背景区部分空白，其他部分遵循repeat */
   background: 0 / contain url(./OET.jpg);
   /* background-repeat: no-repeat; */
 
-  /* cover属性会直接占满width和height中较小的一个，其他放大填满 */
+  /* cover 保持图像的宽高比例，可能背景图片部分看不见 */
   background: 0 / cover url(./OET.jpg);
   /* background: cover url(./OET.jpg); */
   /* background-size: contain; */
