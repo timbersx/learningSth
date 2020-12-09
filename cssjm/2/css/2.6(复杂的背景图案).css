@@ -1,0 +1,43 @@
+/* 我们还需要很多其他不同类型的图案，比如网格、波点、棋盘等。幸运的是，CSS 渐变在实现这些图案时也能大展拳脚。用 CSS 渐变来创
+建任何种类的几何图案几乎都是可能的，只不过有时这种方法不太实际。我们可能稍不留神就会弄出一大块无法维护的代码。CSS 图案可以算
+是一个值得使用 CSS 预处理器（比如 Sass，http://sass-lang.com）来减少代码冗余的案例，因为最终图案越复杂，相应的代码就会变得越来越不
+DRY.在本篇攻略中，我们将深入讨论如何创建那些简单而常用的图案。 */
+/* 只使用一个渐变时，我们能创建的图案并不多。当我们把多个渐变图案组合起来，让它们透过彼此的透明区域显现时，神奇的事情就发生了。按
+照这个思路，我们首先想到的可能就是把水平和垂直的条纹叠加起来，从而得到各种样式的网格。举例来说，下面的代码会创建桌布（方格纹）图案。 */
+/* 1.桌布与蓝图 */
+.root {
+  width: 300px;
+  height: 200px;
+  background: white;
+  background-image: linear-gradient(90deg,rgba(200,0,0,.5) 50%, transparent 0),
+  linear-gradient( rgba(200,0,0,.5) 50%, transparent 0);
+  background-size: 30px 30px;
+}
+/* 在某些情况下，我们希望网格中每个格子的大小可以调整，而网格线条的粗细同时保持固定。举例来说，类似图纸辅助线的网格就是这种情况。这
+是一个非常好的例子，展示了使用长度而不是百分比作为色标的场景 */
+.root {
+  background: #58a;
+  background-image:linear-gradient(white 1px, transparent 0),
+  linear-gradient(90deg, white 1px, transparent 0);
+  background-size: 30px 30px;
+}
+/* 我们得到的结果就是一幅用 1px 白线画出来的 30px 大小的网格图案。与“灵活的同色系条纹”的例子类似，主色调在这里也起到了回退颜色的作用。
+该网格是一个很好的例子，说明图案可以用合理的、可维护的（尽管还不是完全 DRY 的）CSS 代码生成。 */
+/* 我们甚至可以把两幅不同线宽、不同颜色的网格图案叠加起来，得到一个更加逼真的蓝图网格 */
+.root {
+  background: #58a;
+  background-image:linear-gradient(white 2px, transparent 0),
+  linear-gradient(90deg, white 2px, transparent 0),
+  linear-gradient(hsla(0,0%,100%,.3) 1px,transparent 0),
+  linear-gradient(90deg, hsla(0,0%,100%,.3) 1px,transparent 0);
+  background-size: 75px 75px, 75px 75px, 15px 15px, 15px 15px;
+}
+
+/* 2.波点 */
+/* 目前为止，我们一直在用线性渐变生成图案。但是，径向渐变同样也是非常实用的，因为它允许我们创建圆形、椭圆，或是它们的一部分。径向渐
+变能够创建的最简单的图案是圆点的阵列 */
+.root {
+  background: #655;
+  background-image: radial-gradient(tan 30%, transparent 0);
+  background-size: 30px 30px;
+}

@@ -1,0 +1,11 @@
+/* radial-gradient */
+
+/* 径向渐变(Radial gradients)由其中心点、边缘形状轮廓(Ending shape)、两个或多个色值结束点(color stops)定义而成。 */
+/* 径向渐变函数绘制了一系列从中心点放射到边缘形状的同心轮廓。边缘形状可以是圆形（circle）或椭圆形 */
+/* 色彩结束点位于虚拟渐变射线（Virtual gradient ray）上，该渐变射线从中心点水平向右延伸 */
+.root {
+  width: 200px;
+  height: 200px;
+  /* 第一个参数: position(规定中心点的位置) */
+  background: radial-gradient();
+}

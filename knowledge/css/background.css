@@ -42,11 +42,11 @@
   /* 如果要直接使用简写属性必须在bg-position后加/然后写 */
   /* background: 10px 20px / 100px url(./OET.jpg); */
   /* 这样写会直接占满？保持图像的宽高比例，可能背景区部分空白，其他部分遵循repeat */
-  background: 0 / contain url(./OET.jpg);
+  background: 0 / contain no-repeat url(./OET.jpg) bisque;
   /* background-repeat: no-repeat; */
 
   /* cover 保持图像的宽高比例，可能背景图片部分看不见 */
-  background: 0 / cover url(./OET.jpg);
+  background: 0 / cover url(./OET.jpg) bisque;
   /* background: cover url(./OET.jpg); */
   /* background-size: contain; */
   /* background: round cover url(./OET.jpg); */
