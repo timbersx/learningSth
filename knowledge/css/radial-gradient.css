@@ -4,8 +4,31 @@
 /* 径向渐变函数绘制了一系列从中心点放射到边缘形状的同心轮廓。边缘形状可以是圆形（circle）或椭圆形 */
 /* 色彩结束点位于虚拟渐变射线（Virtual gradient ray）上，该渐变射线从中心点水平向右延伸 */
 .root {
-  width: 200px;
+  width: 400px;
   height: 200px;
-  /* 第一个参数: position(规定中心点的位置) */
-  background: radial-gradient();
+  background: radial-gradient(deeppink,black);
+  /* 第一个参数shape at position：shape(规定渐变的形状) position(规定中心点位置，默认center) */
+  /* 圆形(ps: 可以看出，渐变射线依然是从中心点水平向右延伸，即使上下没有渐变完) */
+  background: radial-gradient(circle, deeppink,black);
+  /* 圆形，中心在顶部 */
+  background: radial-gradient(circle at top, deeppink,black);
+  background: radial-gradient(ellipse at 40px 40px, deeppink,black);
+  /* 第二个参数size(渐变的尺寸大小) */
+  background: radial-gradient(50px 50px, deeppink,black);
+  background-color: #2ba545;
+  background-repeat: no-repeat;
+}
+
+/* 一些关键字 */
+.root {
+  width: 400px;
+  height: 200px;
+  /* closest-side 渐变的边缘形状与容器距离渐变中心点最近的一边相切（圆形）或者至少与距离渐变中心点最近的垂直和水平边相切 {相当于内切⚪}*/
+  background: radial-gradient(closest-side, deeppink,black);
+  /* closest-corner 渐变的边缘形状与容器距离渐变中心点最近的一个角相交。{相当于刚好包住长方形，外切⚪} */
+  /* background: radial-gradient(closest-corner, deeppink,black); */
+  /* farthest-side 与closest-side相反，边缘形状与容器距离渐变中心点最远的一边相切（或最远的垂直和水平边）。 */
+  background: radial-gradient(farthest-side, deeppink,black);  
+  /* farthest-corner 渐变的边缘形状与容器距离渐变中心点最远的一个角相交。 */
+  background: radial-gradient(farthest-corner, deeppink,black);
 }
