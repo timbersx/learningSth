@@ -9,7 +9,7 @@
   /* 这样写不可👇 */
   /* background: url(./OET.jpg) greenyellow no-repeat top 20px; */
   /* 正确是拆成下面两条 */
-  background: url(./OET.jpg) greenyellow no-repeat;
+  background: url(./image/OET.jpg) greenyellow no-repeat;
   background-position: right 10px top 5px;
   /* 还可以设百分比 */
   background-position: right 100% top 10%;

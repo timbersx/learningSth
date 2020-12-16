@@ -41,3 +41,68 @@ DRY.在本篇攻略中，我们将深入讨论如何创建那些简单而常用�
   background-image: radial-gradient(tan 30%, transparent 0);
   background-size: 30px 30px;
 }
+
+.root {
+  background: #655;
+  background-image: radial-gradient(tan 30%, transparent 0), radial-gradient(tan 30%, transparent 0);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+/* 3.棋盘 */
+/* 棋盘图案在很多场景下都会用到。比如说，相对于单调的纯色背景来说，具有细微对比度的棋盘图案可能就是一个有趣的替代品。在各种应用程序的
+界面中，灰色的棋盘图案已经是用于表示透明色的事实标准。在 CSS 中创建棋盘图案是可能的，只不过实现过程可能比我们想像中的要“绕”一些。*/
+/* 只用一层 CSS 渐变无法创建四周有空隙的方块 */
+/* !!这里的窍门在于用两个直角三角形来拼合出我们想要的方块 */
+.root {
+  background: #eee;
+  background-image: linear-gradient(45deg, #bbb 50%, transparent 0);
+  background-size: 30px 30px;
+}
+
+.root {
+  background: #eee;
+  background-image: linear-gradient(45deg, #bbb 25%, transparent 0);
+  background-size: 30px 30px;
+}
+
+.root {
+  background: #eee;
+  background-image: linear-gradient(45deg, transparent 75%, #bbb 0);
+  background-size: 30px 30px;
+}
+
+.root {
+  background: #eee;
+  background-image: linear-gradient(45deg, #bbb 25%, transparent 0), linear-gradient(45deg, transparent 75%, #bbb 0);
+  background-size: 30px 30px;
+  background-position: 0 0, -15px -15px;
+}
+/* 已经实现了棋盘👇 */
+.root {
+  background: #eee;
+  background-image: linear-gradient(45deg, #bbb 25%, transparent 0), linear-gradient(45deg, transparent 75%, #bbb 0), linear-gradient(45deg, #bbb 25%, transparent 0), linear-gradient(45deg, transparent 75%, #bbb 0);
+  background-size: 30px 30px;
+  background-position: 0 0, -15px -15px, 15px 15px, 0 0;
+}
+
+.root {
+  background: #eee;
+  background-image: linear-gradient(45deg, #bbb 25%, transparent 0, transparent 75%, #bbb 0),linear-gradient(45deg, #bbb 25%, transparent 0, transparent 75%, #bbb 0) ;
+  background-size: 30px 30px;
+  background-position: 0 0, -15px -15px;
+}
+
+.root {
+  background: #eee;
+  background-image: linear-gradient(45deg, rgba(0,0,0,.25) 25%, transparent 0, transparent 75%, rgba(0,0,0,.25) 0),
+  linear-gradient(45deg,rgba(0,0,0,.25) 25%, transparent 0,transparent 75%, rgba(0,0,0,.25) 0);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+/* 圆锥渐变 */
+.root {
+  background: #eee;
+  background-image: repeating-conic-gradient(#bbb 0, #bbb 25%, #eee 0, #eee 50%);
+  background-size: 30px 30px;
+}

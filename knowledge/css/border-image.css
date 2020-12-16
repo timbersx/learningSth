@@ -1,0 +1,63 @@
+/* border-image */
+
+/* 注：图片是一张90px*90px的png，把图片想象成9宫格 */
+/* border-image-slice :规定你想如何裁剪图片{四个角}，所有的值都是指相对于设为border-image的图片而言 */
+.root {
+  width: 200px;
+  height: 200px;
+  border: 30px;
+  /* 数字，默认单位是px */
+  /* border-image: url(./image/border.png) 30; */
+  /* 百分比 */
+  /* border-image: url(./image/border.png) 50%; */
+  /* 4个数字，分别代表你裁剪的 上右下左 部分   （这里右边是裁剪了两个球的宽度，可以看到表现为压缩两个球到边框宽度）*/
+  border-image: url(./image/border.png) 30 60 30 30;
+}
+
+/* border-image-repeat 定义图片如何填充边框{四个边} */
+.root {
+  width: 200px;
+  height: 200px;
+  border: 30px solid;
+  /* 初始值是stretch */
+  border-image: url(./image/border.png) 30 stretch;
+  border-image: url(./image/border.png) 30 repeat;
+  /* round 当不能整数次平铺时，根据情况放大或缩小图像。 */
+  border-image: url(./image/border.png) 30 round;
+  /* round 平铺图像 。当不能整数次平铺时，会用空白间隙填充在图像周围（不会放大或缩小图像） */
+  border-image: url(./image/border.png) 30 space;
+}
+
+/* border-image-width  指定了边界图像 (border image) 的宽度 */
+/* 这个属性默认是边框的宽度，用来限制相应区域背景图的范围，
+首先裁剪好了的{四边}和{四角}会根据这个属性值进行缩放。然后再重复或平铺或拉伸。 */
+.root {
+  width: 200px;
+  height: 200px;
+  border: 30px solid;
+  /* 在复合写法中应该位于 slice属性 之后 用“/”间隔 */
+  border-image: url(./image/border.png) 30 / 20px repeat;
+  border-image: url(./image/border.png) 30 / 40px round;
+  /* border-image: url(./image/border.png) 30 / 100px repeat; */
+}
+
+/* border-image-outset属性定义边框图像可超出边框盒的大小。 */
+.root {
+  width: 200px;
+  height: 200px;
+  border: 30px solid;
+  /* 在复合写法中应该位于 border-image-width 后面，用“/”间隔, 如果大于指定的可超出范围，会占用盒子内空间 */
+  border-image: url(./image/border.png) 30 / 40px / 5px repeat;
+  /* 可以指定上右下左四个方向 */
+  border-image: url(./image/border.png) 30 / 40px / 5px 0 0 0 repeat;
+}
+
+.root {
+  width: 200px;
+  height: 200px;
+  border: 30px solid;
+  /* border-image也是会透出背景的哦 */
+  border-image: linear-gradient(rgba(13, 120, 0), transparent) 30 repeat;
+  background: deeppink;
+  background-clip: padding-box;
+}
