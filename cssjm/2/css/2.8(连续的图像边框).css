@@ -2,17 +2,93 @@
 整的边框区域。用 CSS 如何做到这一点呢？ */
 /* 这个时候，你的脑子里可能会有一个声音跳出来高声尖叫：“borderimage ！用 border-image ！只要有 border-image，这根本就不是一个问
 题！”先别急，年轻人。我们先来回忆一下 border-image 是如何工作的。 */
-/* 它的原理基本上就是九宫格伸缩法：把图片切割成九块，然后把它们应用到元素边框相应的边和角。 */
+/* 就算我们针对特定的元素宽高和边框厚度找到了切割位置，这个结果也无法适配尺寸稍有差异的其他元素。问题在于，我们并不想让图片的某个特定部分固定在拐
+角处；而是希望出现在拐角处的图片区域是随着元素宽高和边框厚度的变化而变化的。只要你稍微尝试一下，就会立即得出结论：这用 border-image
+是不可能做到的。接下来我们该怎么办？*/
+
+/* 最简单的办法是使用两个 HTML 元素：一个元素用来把我们的石雕图片设为背景，另一个元素用来存放内容，并设置纯白背景，然后覆盖在前者之上 */
+/* .root-father {
+  width: 100px;
+  background-size: cover;
+  padding: 1em;
+  background: url(./2.8图像边框.jpg);
+}
 .root {
-  width: 150px; 
-  height: 120px;
-  padding: 20px;
-  border: 15px solid transparent ;
-  border-image: url(./2.8图像边框.jpg) 30;
+  background: white;
+  padding: 1em;
+} */
+
+/* 问题来了：如果只用一个元素，我们能做到这个效果吗？ */
+/* 感谢背景与边框（第三版）（http://w3.org/TR/css3-background）引入了对 CSS 渐变和背景的扩展，使得我们只用一个元素就能达成完全一样的效
+果。主要的思路就是在石雕背景图片之上，再叠加一层纯白的实色背景。为了让下层的图片背景透过边框区域显示出来，我们需要给两层背景指定不同
+的 background-clip 值。最后一个要点在于，我们只能在多重背景的最底层设置背景色，因此需要用一道从白色过渡到白色的 CSS 渐变来模拟出纯
+白实色背景的效果。 */
+/* .root {
+  width: 100px;
+  padding: 1em;
+  border: 1em solid transparent;
+  background: linear-gradient(white, white), url(2.8图像边框.jpg);
+  background-size: cover;
+  background-clip: padding-box, border-box;
+} */
+
+/* 正如我们中所看到的，这个结果跟我们想要的已经非常接近了。但边框的图片有一种怪异的拼接效果。原因是 background-origin 的
+默认值是 padding-box，因此，图片的显示尺寸不仅取决于 padding box 的尺寸，而且被放置在了 padding box 的原点（左上角）。我们看到的实际上
+就是背景图片以平铺的方式蔓延到 border box 区域的效果。为了修正这个问题，只需把 background-origin 也设置为 border-box 就可以了： */
+/* .root {
+  width: 100px;
+  padding: 1em;
+  border: 1em solid transparent;
+  background: linear-gradient(white, white), url(2.8图像边框.jpg);
+  background-size: cover;
+  background-clip: padding-box, border-box;
+  background-origin: border-box;
+} */
+
+.root {
+  width: 100px;
+  padding: 1em;
+  border: 1em solid transparent;
+  background: linear-gradient(white, white) padding-box, url(2.8图像边框.jpg) border-box 0 / cover;
 }
 
-/* 就算我们针对特定的元素宽高和边框厚度找到了切割位置，这个结果也无法适配尺寸稍有差异的其他元素。问题在于，我们并不想让图片的某个特定部分固定在拐
-角处；而是希望出现在拐角处的图片区域是随着元素宽高和边框厚度的变化
-而变化的。只要你稍微尝试一下，就会立即得出结论：这用 border-image
-是不可能做到的。接下来我们该怎么办？
- */
+/* 当然，这个技巧还可以用在渐变图案上。举个例子，下面这段代码可以生成一种老式信封样式的边框： */
+
+.root {
+  width: 200px;
+  height: 100px;
+  border: 1em solid transparent;
+  background: linear-gradient(white, white) padding-box,
+  repeating-linear-gradient(-45deg, red 0, red 12.5%, transparent 0, transparent 25%,#58a 0, #58a 37.5%,
+  transparent 0, transparent 50%) 0 / 5em 5em;
+}
+
+/* 这个技巧的另一个用武之地是生成好玩的蚂蚁行军边框！蚂蚁行军边框是一种虚线边框，看起在不断转动，就好像排队前进的蚂蚁一样（如果你把
+虚线上的线段想像成一只只蚂蚁的话）。这个技巧在图形界面中的大量应用可能完全出乎你的意料——几乎所有的图像编辑软件都会使用这个效果来标
+示选区。 */
+/* 为了创建蚂蚁行军效果，我们将会用到“老式信封”技巧的一个变种。我们将把条纹转变为黑白两色，并把边框的宽度减少至 1px（注意到斜向条
+纹是怎么转变成虚线边框的吗），然后再把 background-size 改为某个合适的值。最后，我们把 background-position 以动画的方式改变为 100%，就
+可以让它滚动起来了 */
+@keyframes ants { to { background-position: 100% } }
+
+/* .root {
+  width: 200px;
+  height: 100px;
+  padding: 1em;
+  border: 1px solid transparent;
+  background:
+  linear-gradient(white, white) padding-box,
+  repeating-linear-gradient(-45deg,
+  black 0, black 25%, white 0, white 50%
+  ) 0 / .6em .6em;
+  animation: ants 12s linear infinite;
+ } */
+
+ .root {
+  border-top: .2em solid transparent;
+  border-image: 100% 0 0 linear-gradient(90deg,
+   currentColor 4em,
+   transparent 0);
+  padding-top: 1em;
+  background: none;
+ }
