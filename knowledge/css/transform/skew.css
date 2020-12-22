@@ -1,0 +1,25 @@
+/* skew() 函数 */
+/* skew() 函数定义了一个元素在二维平面上的倾斜转换 */
+.root {
+  width: 200px;
+  height: 200px;
+  margin: 100px auto;
+  background-color: deeppink;
+  /* 参数1：ax 是一个 <angle>，表示用于沿横坐标扭曲元素的角度。 */
+  /* 参数2：ay 是一个 <angle> ，表示用于沿纵坐标扭曲元素的角度。如果未定义，则其默认值为0，导致纯水平倾斜。 */
+  transform: skew(60deg);
+  /* transform: skew(0deg, 10deg); */
+  transform: skew(10deg, 10deg);
+  /* 由于由于我们给元素限定了高度为200px，而skewX()方法是沿着X轴方向倾斜。所以，只要倾斜角度不是180°，
+  元素都会保持100px的高度。同时为了保持倾斜，只能沿着X轴拉长本身。 */
+  transform: skew(45deg);
+  transform: skew(0, 60deg);
+}
+
+/* normal */
+.root2 {
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  background-color: deepskyblue;
+}

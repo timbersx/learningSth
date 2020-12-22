@@ -84,6 +84,10 @@
   animation: ants 12s linear infinite;
  } */
 
+
+ /* 当然，border-image 也有它强大的地方，尤其是在搭配渐变图案时更是威力倍增。举个例子，假设我们需要一个顶部边框被裁切的效果，就像
+一般的脚注那样。我们所需要的就是 border-image 属性再加上一条由渐变生成的垂直条纹，并把要裁切的长度在渐变中写好。边框线的粗细交给
+border-width 来控制。代码看起来是这样的： */
  .root {
   border-top: .2em solid transparent;
   border-image: 100% 0 0 linear-gradient(90deg,
