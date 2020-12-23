@@ -11,7 +11,7 @@
   /* transform: skew(0deg, 10deg); */
   transform: skew(10deg, 10deg);
   /* 由于由于我们给元素限定了高度为200px，而skewX()方法是沿着X轴方向倾斜。所以，只要倾斜角度不是180°，
-  元素都会保持100px的高度。同时为了保持倾斜，只能沿着X轴拉长本身。 */
+  元素都会保持200px的高度。同时为了保持倾斜，只能沿着X轴拉长本身。 */
   transform: skew(45deg);
   transform: skew(0, 60deg);
 }
