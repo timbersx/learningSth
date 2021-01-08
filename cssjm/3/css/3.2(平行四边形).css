@@ -37,3 +37,36 @@ absolute，然后再把所有偏移量设置为零，以便让它在水平和垂
   left: 0;
   background-color: #eee;
 }
+
+/* 此时，用伪元素生成的方块是重叠在内容之上的，一旦给它设置背景，就会遮住内容,为了修复这个问题，我们可以给伪元素设置z-index:-1 */
+
+.root::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #eee;
+  z-index: -1;
+}
+
+/* 现在我们要做的最后一步，就是尽情地对它设置变形样式，并享受美好的结果。最终版的代码如下所示，它产生的视觉效果跟前文所述技巧是完全
+一致的： */
+
+.root::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #eee;
+  z-index: -1;
+  transform: skew(-45deg);
+}
+
+/* 这个技巧不仅对 skew() 变形来说很有用，还适用于其他任何变形样式，当我们想变形一个元素而不想变形它的内容时就可以用到它。举个例子，我
+们把这个技巧针对 rotate() 变形样式稍稍调整一下，再用到一个正方形元素上，就可以很容易地得到一个菱形。
+这个技巧的关键在于，我们利用伪元素以及定位属性产生了一个方块，然后对伪元素设置样式，并将其放置在其宿主元素的下层。这种思路同样可
+以运用在其他场景中，从而得到各种各样的效果。 */

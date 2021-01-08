@@ -1,0 +1,7 @@
+/* CSS的rotate()函数定义了一种将元素围绕一个定点（由transform-origin属性指定）旋转而不变形的转换。*/
+.root {
+  width: 200px;
+  height: 200px;
+  background-color: #eee;
+  transform: rotate(45deg);
+}

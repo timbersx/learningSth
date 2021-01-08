@@ -1,0 +1,60 @@
+/* 目前的 CSS 仍然无法做到只用一行简单直观的代码就生成切角的效果。这导致绝大多数网页开发者倾向于使用背景图片来达到目的，比如
+使用三角形盖住元素的顶角来模拟切角效果（当网页背景是纯色时），或者使用一张或多张已经切过角的图片来作为整个元素的背景。
+这些方案显然都不够灵活、难以维护，而且增加了网页的加载时间：不仅增加了额外的 HTTP 请求，而且网页所需的文件体积也增加了。我们还有
+更好的方法吗？ */
+
+/* 第一种方案来自于无所不能的 CSS 渐变。 */
+
+.root {
+  width: 200px;
+  height: 200px;
+  background: deeppink;
+  background: linear-gradient(135deg,blue 30px , deeppink 15px);
+}
+/* 事实上，第3行声明并不是必需的，加上它是将其作为回退机制 */
+
+/* 现在，假设我们想要两个角被切掉的效果，以底部的两个角为例。我们只用一层渐变是无法做到这一点的，因此要再加一层。我们最初的想法可能
+是这样的 */
+.root {
+  width: 200px;
+  height: 200px;
+  background: deeppink;
+  background: linear-gradient(-45deg,blue 30px, deeppink 0),
+              linear-gradient(135deg, blue 30px, deeppink 0);
+}
+
+/* 这样写是行不通的。默认情况下，这两层渐变都会填满整个元素，因此它们会相互覆盖。需要让它们都缩小一
+些，于是我们使用 background-size 让每层渐变分别只占据整个元素一半的面积。 */
+.root {
+  width: 200px;
+  height: 200px;
+  background: deeppink;
+  background: linear-gradient(-45deg,blue 30px, deeppink 0),
+              linear-gradient(135deg, blue 30px, deeppink 0);
+  background-size: 50% 100%;
+}
+
+/* 如你所见，尽管我们已经用了background-size，但这两层渐变仍然是相互覆盖的。原因在于，我们忘记把 background-repeat 关掉了，因而每层
+渐变图案各自平铺了两次。这导致我们的两层渐变背景仍然是相互覆盖的，只不过这次是因为背景平铺。改进后的代码是这样的 */
+.root {
+  width: 200px;
+  height: 200px;
+  background: deeppink;
+  background: linear-gradient(-45deg,blue 30px, deeppink 0) right,
+              linear-gradient(135deg, blue 30px, deeppink 0) left;
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+}
+
+/* 我们终于成功了！看到这里，你应该已经猜到怎样把四个角都做出切角效果了。 */
+.root {
+  width: 200px;
+  height: 200px;
+  background: deeppink;
+  background: linear-gradient(-45deg,transparent 30px, deeppink 0) right bottom,
+              linear-gradient(135deg, transparent 30px, deeppink 0) left top,
+              linear-gradient(-135deg, transparent 30px, deeppink 0) right top,
+              linear-gradient(45deg, transparent 30px, deeppink 0) left bottom;
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+}
