@@ -24,7 +24,7 @@
   border-image: url(./image/border.png) 30 repeat;
   /* round 当不能整数次平铺时，根据情况放大或缩小图像。 */
   border-image: url(./image/border.png) 30 round;
-  /* round 平铺图像 。当不能整数次平铺时，会用空白间隙填充在图像周围（不会放大或缩小图像） */
+  /* space 平铺图像 。当不能整数次平铺时，会用空白间隙填充在图像周围（不会放大或缩小图像） */
   border-image: url(./image/border.png) 30 space;
 }
 

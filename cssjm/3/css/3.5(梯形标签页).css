@@ -1,0 +1,11 @@
+/* 一直以来，梯形都是众所周知难以用CSS 生成的形状，尽管它也十分常用，尤其是对于标签页来说。网页开发者如果没有用精心设计的背景图片来
+实现梯形，那多半就是在用边框来模拟梯形两侧的斜边。 */
+/* 如果有一组 2D 变形属性可以生成一个梯形，我们就可以利用“平行四边形”涉及的技巧来达到目的。然而遗憾的是并没有。试想在现实的三维世界
+中旋转一个矩形。由于透视的关系，我们最终看到的二维图像往往就是一个梯形！谢天谢地，我们可以在 CSS 中用 3D 旋转来模拟出这个效果 */
+.root {
+  width: 100px;
+  height: 50px;
+  margin: 100px;
+  transform: perspective(.5em) rotateX(5deg);
+  background: repeating-linear-gradient(45deg, deeppink 0, deeppink 20px, deepskyblue 20px, deepskyblue 40px);
+}
