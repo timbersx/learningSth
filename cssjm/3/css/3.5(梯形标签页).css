@@ -6,6 +6,77 @@
   width: 100px;
   height: 50px;
   margin: 100px;
-  transform: perspective(.5em) rotateX(5deg);
-  background: repeating-linear-gradient(45deg, deeppink 0, deeppink 20px, deepskyblue 20px, deepskyblue 40px);
+  /* transform: perspective(.5em) rotateX(5deg); */
+  /* background: repeating-linear-gradient(45deg, deeppink 0, deeppink 20px, deepskyblue 20px, deepskyblue 40px); */
 }
+
+/* 对元素使用了 3D变形之后，其内部的变形效应是“不可逆转”的，这一点跟 2D 变形不同（在 2D 变形的体系之下，内部的逆向变形可以抵消外部的变
+形效应）。取消其内部的变形效应在技术上是有可能的，但非常复杂。因此，如果我们想发挥 3D 变形的功能来生成梯形，唯一可行的途径就是把变形效果
+作用在伪元素上。这有些类似于我们在“平行四边形”一节中生成平行四边形的方法 */
+.root {
+  width: 130px;
+  height: 60px;
+  margin: 100px;
+  line-height: 60px;
+  text-align: center;
+  background-color: rgba(100, 100, 100, 0.6);
+  vertical-align: middle;
+  position: relative;
+}
+/* .root::after {
+  content: '';
+  position: absolute;
+  top: 0;right: 0;bottom: 0;left: 0;
+  z-index: -1;
+  background: #58a;
+  transform: perspective(.5em) rotateX(5deg);
+} */
+
+/* 正如我们在所看到的，这个方法确实可以生成一个基本的梯形。但还有一个问题没有解决。当我们没有设置  transform-origin 属性时，应用变形效果会让这
+个元素以它自身的中心线为轴进行空间上的旋转。因此，元素投射到 2D 屏幕上的尺寸会发生多种变化：它的宽度会增加，它所占据的位置会稍稍下移，它在高度上
+会有少许缩减，等等。这些变化导致它在设计上很难控制。 */
+/* 为了让它的尺寸更好掌握，我们可以为它指定 transform-origin:bottom; 当它在 3D 空间中旋转时，可以把它的底边固定住。你可以看到这个差异。现在它
+看起来就直观多了,只有高度会发生变化.不过这样一来,高度的缩水会变得更加显眼，因为现在整个元素是转离屏幕前的观众的;而在之前，元素的上半部分会转向屏
+幕后面，下半部分会转出屏幕。相比之下，在 3D 空间中，之前的元素总体上是离观众更近的。为了纠正这个问题，我们可能会想到给元素增加额外的顶部内边距。
+不过在那些不支持 3D 变形的浏览器中，结果看起来会很怪异。我们还可以换种思路，同样通过变形属性来改变它的尺寸。这样一来，如果浏览器不支持 3D 变形，
+则所有的变形属性都会被丢弃，从而显示出它朴素的本来面目。经过一番试验之后，我们会发现，垂直方向上的缩放程度（也就是scaleY() 变形属性）在达到 130% 
+左右时刚好可以补足它在高度上的缩水： */
+.root::after {
+  content: '';
+  position: absolute;
+  top: 0;right: 0;bottom: 0;left: 0;
+  z-index: -1;
+  background: #58a;
+  transform: scaleY(1.3) perspective(.5em) rotateX(5deg);
+  transform-origin: bottom;
+}
+
+/* 你可以看到它的效果，以及它的回退样式。到了这里，我们好像才在视觉效果上追平了本节开头所提到的基于边框的方案；只不过在语法上，这个方法要更加简
+明一些。其实，当你开始为标签页增加一些样式的时候，这个技巧的独特优势才会逐渐显现出来。举例来说，下面这段代码会给标签页添加图中的那些样式： */
+.root2 a {
+  position: relative;
+  display: inline-block;
+  padding: .3em 1em 0;
+}
+
+.root2 > a::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -1;
+  background: #ccc;
+  background-image: linear-gradient(
+  hsla(0,0%,100%,.6),
+  hsla(0,0%,100%,0));
+  border: 1px solid rgba(0,0,0,.4);
+  border-bottom: none;
+  border-radius: .5em .5em 0 0;
+  box-shadow: 0 .15em white inset;
+  transform: perspective(.5em) rotateX(5deg);
+  transform-origin: bottom left;
+ }
+
+ /* 如你所见，我们给它添加了背景、边框、圆角、投影等一系列样式。它们都可以完美生效！不仅如此，我们只需要把 transform-origin 改成bottom left 或
+bottom right，就可以立即得到左侧倾斜或右侧倾斜的标签页！ */
+/* 尽管优点多多，但这个技巧也不是完美无缺的。它存在一个非常大的缺点：斜边的角度依赖于元素的宽度。因此，当元素的内容长度不等时，想要得到斜度一致的
+梯形就很伤脑筋了。不过，对于宽度变化不大的多个元素（比如导航菜单）来说，这个方法还是非常管用的。在这种场景下，斜度的差异非常难以察觉。 */
