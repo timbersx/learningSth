@@ -16,10 +16,10 @@
   /* 直接输入数字则默认left 和 top */
   background-position: 10px 10px;
   /* top right是相对什么而言的？ */
-  /* 边距依然是10 */
+  /* 边距依然是10👇 */
   padding: 10px;
-  /* 加上边距变成20px了 */
   border: grey dashed 10px;
+  /* 加上边距变成20px了 */
   /* 结论：是以padding-box为定位基准的 */
   /* ps：background-origin可以修改这一默认行为 */
 }

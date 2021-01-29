@@ -86,7 +86,7 @@ Web 技术创建出来，即便是最简单的两种颜色的形态也不例外�
   background-color: inherit;
   transform-origin: left;
   animation: spin 3s linear infinite,
-  bg 6s step-end infinite;
+  bg 6s step-end ;
 }
 
 /* 这个效果很棒，但我们怎样才能制作出多个不同比率的静态饼图呢？（这似乎才是更加常见的需求。）理想情况下，我们希望可以用这样的方式来
@@ -98,3 +98,103 @@ Web 技术创建出来，即便是最简单的两种颜色的形态也不例外�
 用内联样式来控制饼图的比率带来了一个很大的挑战：这些负责设置比率的 CSS 代码最终是要应用到伪元素身上的。你可能已经知道了，我们无
 法为伪元素设置内联样式，因此还要开动脑筋寻找对策。
 */
+/* 解决方案恰恰来源于一个看似最不沾边的地方。我们将使用上面刚刚用到的那个动画，但动画必须处于暂停状态。跟常规情形下我们让动画动起
+来的做法不一样，这里我们要用负的动画延时来直接跳至动画中的任意时间点，并且定格在那里。很难理解？别担心，先来看看负的 animation-delay
+在规范中的解释。 */
+/* 一个负的延时值是合法的。与 0s 的延时类似，!!它意味着动画会立即开始播放，但会自动前进到延时值的!绝对值!处!!，就好像动画在过去已经播
+放了指定的时间一样。因此实际效果就是动画跳过指定时间而从中间开始播放了。” */
+/* 因为我们的动画是暂停的，所以动画的第一帧（由负的 animationdelay 值定义）将是唯一显示出的那一帧。在饼图上显出的比率就是我们的
+animation-delay 值在总的动画持续时间中所占的比率。举例来说，如果动画持续时间定为 6s，我们只需要把 animation-delay 设置为 -1.2s，
+就能显示出 20% 的比率。为了简化这个计算过程，我们可以设置一个长达 100s的持续时间。别忘了，这里的动画是永远处在暂停状态的，因此我们
+指定的持续时间并不会产生其他副作用。现在还剩最后一个问题：动画是作用在伪元素上的，但我们希望最终内联样式可以设置在 .pie 元素上。不
+过，由于 <div> 上并没有任何动画效果，我们可以用内联样式的方式为其设置 animation-delay 属性，然后再在伪元素上应用 animation-delay
+: inherit; 属性。综合以上要素，如果要让饼图显示为 20% 和 60%，则结构代码为： */
+/* .pie {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: greenyellow;
+  background-image: linear-gradient(90deg, transparent 50%, #655 0);
+} */
+/* @keyframes spin {
+  to { transform: rotate(.5turn); }
+ }
+ @keyframes bg {
+  50% { background: #655; }
+ }
+ .pie::before {
+  content: '';
+  display: block;
+  margin-left: 50%;
+  height: 100%;
+  border-radius: 0 100% 100% 0 / 50%;
+  background-color: inherit;
+  transform-origin: left;
+  animation: spin 50s linear infinite,
+  bg 100s step-end infinite;
+  animation-play-state: paused;
+  animation-delay: inherit;
+} */
+/* 此时，我们就可以再次优化结构，把饼图的比率写到元素的内容中，就像我们最开始所期望的那样；然后我们通过一段简单的脚本来把
+animation-delay 写到内联样式中
+$$('.pie').forEach(function(pie) {
+ var p = parseFloat(pie.textContent);
+ pie.style.animationDelay = '-' + p + 's';
+});
+ */
+
+ /* 请注意，我们原封不动地保留了文字，因为我们需要它来确保可访问性和可用性。目前，我们的饼图看起来就是这样的效果。我们可以利
+用 color: transparent 来把文字隐藏起来，同时还保证了可访问性，因为此时文字仍然是可以被选中和打印的。我们还可以进一步优化，
+把比率文字放置在饼图的中心处，从而方便用户选中它。为了实现这一点，我们需要进行以下步骤。 */
+/* 1.把这个饼图的 height 换成 line-height（或者添加一个跟 height相等的 line-height 属性，但这会增加无意义的代码重复；其实
+line-height 本身就可以起到设置高度的作用）。
+2.通过绝对定位来完成对伪元素的尺寸设置和定位操作，这样它就不会把文字推到下面了。
+3.增加 text-align: center; 来实现文字的水平居中。
+ */
+ .pie {
+  position: relative;
+  width: 100px;
+  line-height: 100px;
+  border-radius: 50%;
+  background: yellowgreen;
+  background-image:
+  linear-gradient(to right, transparent 50%, #655 0);
+  color: transparent;
+  text-align: center;
+ }
+ @keyframes spin {
+  to { transform: rotate(.5turn); }
+ }
+ @keyframes bg {
+  50% { background: #655; }
+ }
+ .pie::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 50%; height: 100%;
+  border-radius: 0 100% 100% 0 / 50%;
+  background-color: inherit;
+  transform-origin: left;
+  animation: spin 50s linear infinite,
+  bg 100s step-end infinite;
+  animation-play-state: paused;
+  animation-delay: inherit;
+}
+
+/* 基于 角向渐变 的解决方案 */
+
+/* 还记得“棋盘”一节中提到的角向渐变吗？它在这里也是大有用武之地的。我们在生成饼图时只需要一个圆形元素，再配上一幅具有两个色标的角向
+渐变即可。举例来说 40% 饼图可能就是这么简单 */
+/* .ccpie {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(#655 40%, yellowgreen 0);
+} */
+/* 不仅如此，一旦 attr() 函数在 CSS 值（第三版）（http://w3.org/TR/css3-values/#attr-notation）中的扩
+展定义得到广泛实现之后，你将可以通过一个简单的 HTML 标签属性来控制饼图的比率显示。(很遗憾，现在也不行) */
+.ccpie {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  /* background: conic-gradient(#655 attr(data-value %), yellowgreen 0);; */
+}
