@@ -1,0 +1,83 @@
+/* 半透明颜色最初的使用场景之一就是作为背景。将其叠放在照片类或其他花哨的背层之上，可以减少对比度，确保文本的可读性。这种效果确实很
+有视觉冲击力，但仍然可能导致文字很难阅读，特别是当不透明度较低或背层图案太过花哨时。*/
+/* 在传统的平面设计中，这个问题的解决方案通常是把文本层所覆盖的那部分图片区域作模糊处理。模糊的背景看起来不那么花哨，因此在它之上的
+文本就相对比较易读了。过去，由于模糊运算的性能消耗极其巨大，以致于这个技巧在网页设计和 UI 设计中鲜有用武之地。不过，随着 GPU 的不断进
+化以及硬件加速的不断普及，眼下这个技巧已经逐渐流行起来。在过去这几年里，我们已经可以在较新的 Microsoft Windows 系统中看到这个技巧的身
+影，而苹果的 iOS 和 Mac OS X 操作系统也不例外。 */
+.root-father {
+  width: 200px;
+}
+.root {
+  max-width: 20rem;
+  height: 200px;
+  color: #fff;
+  font-size: 1.5em;
+  font-weight: 700;
+  padding: 20px;
+  background: url(https://interactive-examples.mdn.mozilla.net/media/examples/moon.jpg) center / 10rem fixed;
+  position: relative;
+  z-index: 0;
+}
+.inner {
+  height: 150px;
+  position: relative;
+  padding: 15px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+}
+
+/* 借助 blur() 滤镜，我们在 CSS 中获得了对元素进行模糊处理的能力。我们在 SVG 中很早就可以使用模糊滤镜了，而这个 CSS 滤镜本质上就是它
+的硬件加速对应版本。不过，如果我们直接在这个例子中使用 blur() 滤镜，整个元素都会被模糊，文本反而变得更加无法阅读了。有没有某种方法可以
+只对元素的背层（即被该元素遮住的那部分背景）应用这个滤镜呢？ */
+/* 假设大背景的 background-attachment 值是 fixed，这种情况是有可能的，只不过不太常见。由于我们不能直接对元素本身进行模糊处理，就
+对一个伪元素进行处理，然后将其定位到元素的下层，它的背景将会无缝匹配 <body> 的背景。
+首先，我们添加一个伪元素，将其绝对定位，并把所有偏移量置为 0，
+这样就可以将它完整地覆盖到 <main> 元素之上： */
+.inner::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  /* background: rgba(255,0,0,.5);  */
+  /* 仅用于调试 */
+  z-index: -1;
+}
+
+/* 我们还给它设置了一层半透明的 red 背景，这样就可以看清楚我们做了什么，不然很难调试透明的（即不可见的）元素。可以看到，我们的伪元素
+现在就覆盖在内容元素之上。可以用 z-index 来修正这个问题。 */
+/* 现在该把半透明红色背景换掉了，换成跟背层完全匹配的背景。要实现这一点，我们要么把 <body> 的背景复制过来，要么把伪元素的背景声明合
+并过去。我们现在可以进行模糊处理吗？来试试看 ①1 ： */
+/* .root, .inner::before {
+  background: url(https://interactive-examples.mdn.mozilla.net/media/examples/moon.jpg) center / 10rem fixed;
+}
+*/
+.inner {
+  position: relative;
+  /* background: hsla(0,0%,100%,.3); */
+} 
+.inner::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  filter: blur(20px);
+  background: url(https://interactive-examples.mdn.mozilla.net/media/examples/moon.jpg) center / 10rem fixed;
+}
+
+ /* 可以看到，这跟我们的期望已经相当接近了。模糊效果在中心区域看起来非常完美，但在接近边缘处会逐渐消退。这是因为模糊效果
+会削减实色像素所能覆盖的范围，削减的幅度正是模糊半径的长度。对伪元素应用一个 red 背景有助于我们看清事情的真相。为了补偿这
+种情况，我们需要让伪元素相对其宿主元素的尺寸再向外扩大至少 20px（即它的模糊半径）。可以通过 -20px 的外边距来达到目的，由
+于不同浏览器的模糊算法可能存在差异，用一个更大的绝对值（比如 -30px）会更保险一些。如图 4-22 所示，这个方法可以修复边缘模糊消
+退的问题，但现在的情况是有一圈模糊效果超出了容器，这让它看起来不像毛玻璃，而更像是玻璃脏了。*/
+/* 不过幸运的是，这个问题也很容易修复：只要对 main 元素应用overflow: hidden;，就可以把多余的模糊区域裁切掉了。最终代码如下所
+示 */
+.inner {
+  overflow: hidden;
+ }
+ .inner::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  filter: blur(20px);
+  /* margin: -30px; */
+ }
+
+ /* 现在页面文本的可读性比以前好多了，整个设计也优雅多了。现在唯一有争议的问题就是这个效果的回退机制是否算得上平稳退化。如果浏览器不
+支持滤镜，我们将得到最开始所看到的结果。我们只能适当增加背景色的不透明度，以便让回退样式下的可读性得到少许提升。 */
