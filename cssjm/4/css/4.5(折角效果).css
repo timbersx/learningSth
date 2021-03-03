@@ -11,26 +11,26 @@ pure-css-folded-corner-effect）发表了。这些方法的基本原理通常是
 /* 45°折角的解决方案 */
 /* 我们会从一个右上角具有斜面切角的元素开始，这个切角是由“切角效果”一节中的渐变方案实现的。要用这个技巧在右上角创建一个大小为 1em
 的斜面切角，代码会是这样的（简单的渲染效果如图 4-25 所示） */
-.root {
+/* .root {
   width: 200px;
   height: 100px;
   padding: 20px;
   background: #58a;
   background: linear-gradient(-135deg, transparent 2em, #58a 0);
-}
+} */
 
 /* 走到这里，我们就已经完成了一半：接下来所需要做的就是增加一个暗色的三角形来实现翻折效果。实现方法是增加另一层渐变来生成这个三
 角形并将其定位在右上角，这样就可以通过 background-size 来控制折角的大小。 */
-.root {
+/* .root {
   background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,.4) 0) no-repeat 100% 0 / 2em 2em;
-}
+} */
 
 /* 你可以看到只有这层背景会是什么样子。最后把这两层背景组合起来，应该就可以收工了吧？我们来试试看，不过要切记把折页部
 分的三角形放在切角渐变之上： */
-.root {
+/* .root {
   background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,.4) 0) no-repeat 100% 0 / 2em 2em,
   linear-gradient(-135deg, transparent 2em, #58a 0);
-}
+} */
 
 /* 可以看到，结果并不是我们所期望的那样。为什么它们的尺寸不匹配呢？它们可都是 2em 啊！ */
 /* 原因在于（正如我们在“切角效果”一节中所讨论的那样）第二层渐变中的 2em 折角尺寸是写在色标中的，因此它是沿着渐变轴进行度量的，是对
@@ -42,10 +42,10 @@ pure-css-folded-corner-effect）发表了。这些方法的基本原理通常是
 */
 /* 由于 background-size 需要把这个长度重复两次，而且绝大多数的CSS 度量都不是在对角线上进行的，因此第二种方案更加合适。色标的位置
 值我们可以将其取整为 1.5em： */
-.root {
+/* .root {
   background: linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,.4) 0) no-repeat 100% 0 / 2em 2em,
   linear-gradient(-135deg, transparent 1.4em, #58a 0);
-}
+} */
 
 /* 其他角度的解决方案 */
 /* 
@@ -53,26 +53,91 @@ pure-css-folded-corner-effect）发表了。这些方法的基本原理通常是
 我们只是改变斜面切角的角度，那么表示翻折部分的三角形并不会跟着改变，这将导致整体效果被破坏。此外，调整这个三角形的尺寸并不容易。它的尺
 寸并不是由角度来定义的，而是由宽度和高度来定义的。我们怎样才能得到需要的宽度和高度呢？好的，这回该请出三角函数了！
  */
-.root {
-  background: #58a; /* 回退样式 */
+/* .root {
+  background: #58a;
   background:linear-gradient(to left bottom,
     transparent 50%, rgba(0,0,0,.4) 0)
     no-repeat 100% 0 / 2em 2em,
     linear-gradient(-150deg,
     transparent 1.5em, #58a 0);
-}
+} */
 
 /* 如图分析切角效果图后 */
-.root {
-  background: #58a; /* 回退样式 */
+/* .root {
+  background: #58a;
   background: linear-gradient(to left bottom,
   transparent 50%, rgba(0,0,0,.4) 0)
   no-repeat 100% 0 / 3em 1.73em,
   linear-gradient(-150deg,
   transparent 1.5em, #58a 0);
-}
+} */
 
 /* 此时，我们的折角效果所示。如你所见，这个三角形现在确实已经跟切角对上号了，但这个结果看起来更不真实了！尽管我们可能无法很快地找出
 具体原因，但我们以前曾见过无数的折角，因此一眼就可以发现这跟我们印象中的折角相去甚远。如果你拿出一张真实的纸并折出类似的角度，或许就
 能理解它为什么看起来很假了。我们完全不可能把一张纸折成（甚至是哪怕是接近）的那种样子。看看现实世界中的折角，我们会发现这个折页三角形
 是需要微微旋转的，它的尺寸跟我们从元素角上“切”下来的那个三角形应该是一致的。由于我们无法旋转背景，这里终于轮到伪元素登场了 */
+.root {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  background: #58a;
+  background:
+ linear-gradient(-150deg,
+ transparent 1.5em, #58a 0);
+}
+.root::before {
+ content: '';
+ position: absolute;
+ top: 0; right: 0;
+ background: linear-gradient(to left bottom,
+ transparent 50%, rgba(0,0,0,.4) 0)
+ 100% 0 no-repeat;
+ width: 3em;
+ height: 1.73em;
+}
+/* 到了这里，我们只不过是把效果用伪元素又实现了一遍。下一步将把折页三角形的 width 和 height 对调，以此改变它的方向，这样
+就可以得到跟折页缺口对称的三角形，而不是一个可以补足折页缺口的三角形。然后，我们再以逆时针 30°（(90° – 30° ) –30°）来旋转
+这个折页三角形，这样可以让它的斜边与折线平行： */
+.root::before {
+  width: 1.73em;
+ height: 3em;
+ transform: rotate(-30deg);
+}
+/* 你可以看到这页纸在经过上述调整之后会是什么样子。如你所见，我们基本上已经接近目标了，但还需要把这个折页三角形再挪动一下，
+以便让这两个三角形（深色的三角形折页和折角的三角形缺口）的斜边重合。从现在的情况来看，它在水平和垂直方向上都需进行移动，因此
+要算出这两个偏移量似乎困难重重。我们可以让事情变得更简单一些：把transform-origin 设置为 bottom right，让三角形的右下角成为
+旋转的中心，这样就可以让它的右下角保持固定。 */
+.root::before {
+  transform-origin: bottom right;
+}
+/* 现在只需在垂直方向上向上移动这个折页三角形就可以了。为了算出实际要移动的距离，我们又要动用几何学了。所需的垂直偏移量是
+ x - y = 3 - 根号3 ≈ 1.267 949 192 ，我们这里取整为 1.3em： */
+ .root::before {
+  transform: translateY(-1.3em) rotate(-30deg);
+}
+/* 这正是我们一直苦苦追寻的效果。唉，真不容易啊！接下来，由于这个折页三角形现在是由伪元素来实现的，我们还可以让它更加真实一些，
+比如增加圆角、（真正的）渐变以及投影！最终的代码如下所示 */
+.root {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  background: #58a; /* 回退样式 */
+  background:
+  linear-gradient(-150deg,
+  transparent 1.5em, #58a 0);
+  border-radius: .5em;
+}
+.root::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  background: linear-gradient(to left bottom,
+  transparent 50%, rgba(0,0,0,.2) 0, rgba(0,0,0,.4))
+  100% 0 no-repeat;
+  width: 1.73em;
+  height: 3em;
+  transform: translateY(-1.3em) rotate(-30deg);
+  transform-origin: bottom right;
+  border-bottom-left-radius: inherit;
+  box-shadow: -.2em .2em .3em -.1em rgba(0,0,0,.15);
+}
