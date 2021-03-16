@@ -23,3 +23,14 @@ let myGreeting = setTimeout(sayHi, 2000, 'Mr. Universe')
 // .then()块的工作方式类似于使用AddEventListener()向对象添加事件侦听器时的方式。它不会在*事件发生之前*运行（当promise履行时）。
 // 最显着的区别是.then()每次使用时只运行一次，而事件监听器可以多次调用。
 Promise.then(() => {})
+
+// XMLHttpRequest
+function sendMessage(url, type, callBack) {
+  let xhr = new XMLHttpRequest()
+  xhr.open('get', url)
+  xhr.responseType = type
+  xhr.onload = function() {
+    callBack(xhr.response)
+  }
+  xhr.send()
+}

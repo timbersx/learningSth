@@ -17,13 +17,5 @@
 about xhr
 
 <code>
-function sendMessage() {
-  let xhr = new XMLHttpRequest()
-  xhr.open('get', url)
-  xhr.responseType = type
-  xhr.onload = function() {
-    callBack(xhr.response)
-  }
-  xhr.send()
-}
+
 </code>

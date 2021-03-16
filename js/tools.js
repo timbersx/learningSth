@@ -14,3 +14,17 @@ function toNumber(val) {
   var n = parseFloat(val);
   return isNaN(n) ? val : n
 }
+
+/**
+ * 角度转弧度
+ */
+function degToRad(degrees) {
+  return degrees * Math.PI / 180;
+}
+
+/**
+ * 返回给定范围内随机数
+ */
+function rand(min, max) {
+  return Math.floor(Math.random() * (max-min+1)) + (min);
+}
