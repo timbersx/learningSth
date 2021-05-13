@@ -19,7 +19,7 @@
     } 
     */
 
-    /* 好家伙,可以百分比放大缩小了👇 */
+    /* 可以百分比放大缩小了👇 */
     /* .font {
       padding: .3em .8em;
       border: 1px solid #446d88;
@@ -35,7 +35,7 @@
       font-size: 86px;
     }
     /* 把半透明的黑色或白色叠加在主色调上，即可产生主色调的亮色和暗色变体 */
-    /* 好家伙，现在可以只覆盖background color就改颜色了👇 */
+    /* 现在可以只覆盖background color就改颜色了👇 */
     .font {
       padding: .3em .8em;
       border: 1px solid rgba(0, 0, 0, .1);

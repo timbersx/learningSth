@@ -1,2 +1,36 @@
 /* 文本下划线从 Web 诞生之初就已经存在，但我们其实并没有太多办法对它进行自定义。哪怕是在 CSS 降临之后，也只给了我们一个简单的
 开关 text-decoration: underline; */
+/* 跟往常一样，如果手里缺少想要的工具，我们就会想尽办法七拼八凑。我们没有办法直接定义文本下划线的样式，就会很自然地打起边框的主意。
+用边框来模拟下划线，大概是我们最早想出来的 CSS 小把戏之一了： */
+/* a[href] {
+  border-bottom: 1px solid gray;
+  text-decoration: none;
+} */
+
+/* 尽管用 border-bottom 模拟出来的文本下划线给予了我们对颜色、线宽、线型的控制能力，但它并不完美。我们可以看出，这些“下划线”跟文本
+之间的空隙很大，位置甚至比字形的降部（descender）还要低！我们可以试着修复这个问题，将这个链接的 display 属性设置为inline-block，再
+指定一个稍小的 line-height，就像这样： */
+/* a[href] {
+  text-decoration: none;
+  display: inline-block;
+  border-bottom: 1px solid gray;
+  line-height: .9;
+} */
+.root {
+  width: 200px;
+  padding: 10px;
+  border: 1px black  solid;
+  word-break: break-all;
+}
+/* 这个方法确实可以让下划线向文本贴近，但同时会阻止正常的文本换行行为。眼下，我们还可以尝试运用一层内嵌的 box-shadow来模拟下划线的效果： */
+a[href] {
+  text-decoration: none;
+  box-shadow: 0 -1px gray inset;
+}
+
+/* 不过，这个方法存在与 border-bottom 一样的问题，只不过它显示出来的下划线离文本稍近一些。还有没有其他办法可以产生即美观又灵活，
+而且可以定制各种样式的下划线呢？ */
+
+/* 最佳的解决方案往往出自最意想不到的地方。在这个例子中，最佳方案来自于 background-image 及其相关属性。你可能会觉得这完全不可思议，
+但请容我慢慢道来。背景可以完美地跟随换行的文本，而且借助 CSS 背景与边框（第三版）中与背景相关的新属性，我们已经拥有了细粒度控制背景
+的能力。我们甚至不需要用到额外的 HTTP 请求来加载背景图片，因为可以通过 CSS 渐变来凭空生成所需的图像： */
