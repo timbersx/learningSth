@@ -10,4 +10,4 @@
 
 # 伪类&伪元素
 1.  伪元素以::开头，伪类以:开头
-2.  :nth-child()  ::before  ::after  :hover
+2.  :nth-child()  ::before  ::after  :hover :link
