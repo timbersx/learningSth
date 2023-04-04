@@ -1,0 +1,45 @@
+body {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #40739e;
+}
+
+.root {
+  height: 400px;
+  width: 400px;
+  border: 1px solid #ddd;
+}
+.root div {
+  width: 100px;
+  height: 100px;
+  background: #fdcb6e;
+  animation-name: move;
+  animation-duration: 5s;
+}
+
+/* 可以拆分为多个帧名 */
+@keyframes move {
+  25% {
+    transform: translateX(300px);
+    /* background-color: #0984e3; */
+  }
+  50% {
+    transform: translate(300px, 300px);
+    background-color: #fd79a8;
+    border-radius: 0;
+  }
+  75% {
+    transform: translateY(300px);
+    /* background-color: #0984e3; */
+  }
+  /* 组合写法 */
+  25%,75% {
+    background-color: #0984e3;
+    border-radius: 50%;
+  }
+}

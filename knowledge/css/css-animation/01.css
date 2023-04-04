@@ -1,0 +1,42 @@
+body {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #40739e;
+}
+
+.root {
+  height: 100px;
+  width: 100px;
+  background: #8c7ae6;
+  animation-name: hd; /* 动画名称 */
+  animation-duration: 2s; /* 动画持续时间 */
+}
+
+/* 动画可以是from和to，也可以是百分比添加帧 */
+@keyframes hd {
+  /* from {
+    background: #44bd32;
+  }
+  to {
+    background: #8c7ae6;
+  } */
+  /* 初始和结束帧不设置，会自动匹配元素初始状态 */
+  0% {
+    background: #44bd32;
+  }
+  25% {
+    transform: scale(2);
+  }
+  65% {
+    transform: scale(1);
+    background-color: #e84118;
+  }
+  100% {
+    background: #8c7ae6;
+  }
+}
